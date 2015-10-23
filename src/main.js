@@ -1,17 +1,5 @@
 $ = jQuery = require('jquery');
+var React = require('react');
+var Home = require('./components/homePage');
 
-function lol () {
-
-	// alert('yo');
-
-
-
-
-
-}
-lol();
-a;
-
-var App = console.log('yo yo yo');
-
-module.exports = App;
+React.render(<Home />, document.getElementById('app'));
