@@ -4,12 +4,14 @@ var ReactDOM = require('react-dom');
 var Home = require('./components/homePage');
 var Header = require('./components/partials/header');
 var About = require('./components/about/aboutPage');
+var SwatchBox = require('./components/swatches/swatchBox');
 
 var App = React.createClass({
 	render: function(){
 		var Child;
 		switch(this.props.route) {
 			case 'about' : Child = About; break;
+			case 'swatches' : Child = SwatchBox; break;
 			default : Child = Home;
 		}
 

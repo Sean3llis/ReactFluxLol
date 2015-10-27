@@ -28240,10 +28240,10 @@ var Header = React.createClass({displayName: "Header",
 		return (
 			React.createElement("nav", null, 
 				React.createElement("ul", {className: "list-inline"}, 
-					React.createElement("li", null, "link"), 
-					React.createElement("li", null, "link"), 
-					React.createElement("li", null, "link"), 
-					React.createElement("li", null, "link")
+					React.createElement("li", null, React.createElement("a", {href: "/"}, "Home")), 
+					React.createElement("li", null, React.createElement("a", {href: "#swatches"}, "Swatches")), 
+					React.createElement("li", null, React.createElement("a", {href: "/about"}, "About")), 
+					React.createElement("li", null, React.createElement("a", {href: "/"}, "Link"))
 				)
 			)
 		);
@@ -28253,18 +28253,83 @@ var Header = React.createClass({displayName: "Header",
 module.exports = Header;
 
 },{"react":158}],162:[function(require,module,exports){
+"use strict";
+
+var React = require('react');
+var SwatchList = require('../swatches/swatchList');
+
+var SwatchBox = React.createClass({displayName: "SwatchBox",
+	getInitialState: function(){
+		return {swatches: []}
+	},
+	componentDidMount: function(){
+		this.setState({
+			swatches: ["#ECD078", "#D95B43", "#C02942", "#542437", "#53777A"]
+		})
+	},
+	render: function(){
+
+		return (
+			React.createElement("div", {className: "panel"}, 
+				React.createElement("div", {className: "swatches"}, 
+					React.createElement(SwatchList, {swatches: this.state.swatches})
+				), 
+				React.createElement("div", null, 
+					React.createElement("h3", null, "Swatch Group")
+				)
+			)
+		)
+	}
+});
+
+
+module.exports = SwatchBox;
+
+},{"../swatches/swatchList":163,"react":158}],163:[function(require,module,exports){
+"use strict";
+
+var React = require('react');
+
+var SwatchList = React.createClass({displayName: "SwatchList",
+	render: function(){
+		var swatchNodes = this.props.swatches.map(function(swatch){
+			var swatchStyle = {
+				backgroundColor: swatch,
+				width: "20%",
+				display: "inline-block",
+				color: "#fff",
+				minHeight: "100px",
+				lineHeight: "100px"
+			};
+			return (
+				React.createElement("div", {className: "swatch", style: swatchStyle}, swatch)
+			)
+		});
+		return (
+			React.createElement("div", null, 
+				swatchNodes
+			)
+		)
+	}
+});
+
+module.exports = SwatchList;
+
+},{"react":158}],164:[function(require,module,exports){
 $ = jQuery = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Home = require('./components/homePage');
 var Header = require('./components/partials/header');
 var About = require('./components/about/aboutPage');
+var SwatchBox = require('./components/swatches/swatchBox');
 
 var App = React.createClass({displayName: "App",
 	render: function(){
 		var Child;
 		switch(this.props.route) {
 			case 'about' : Child = About; break;
+			case 'swatches' : Child = SwatchBox; break;
 			default : Child = Home;
 		}
 
@@ -28286,4 +28351,4 @@ function render(){
 window.addEventListener('hashchange', render);
 render();
 
-},{"./components/about/aboutPage":159,"./components/homePage":160,"./components/partials/header":161,"jquery":2,"react":158,"react-dom":3}]},{},[162]);
+},{"./components/about/aboutPage":159,"./components/homePage":160,"./components/partials/header":161,"./components/swatches/swatchBox":162,"jquery":2,"react":158,"react-dom":3}]},{},[164]);

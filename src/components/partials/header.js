@@ -7,10 +7,10 @@ var Header = React.createClass({
 		return (
 			<nav>
 				<ul className="list-inline">
-					<li>link</li>
-					<li>link</li>
-					<li>link</li>
-					<li>link</li>
+					<li><a href="/">Home</a></li>
+					<li><a href="#swatches">Swatches</a></li>
+					<li><a href="/about">About</a></li>
+					<li><a href="/">Link</a></li>
 				</ul>
 			</nav>
 		);
