@@ -4,8 +4,13 @@ var React = require('react');
 var SwatchList = require('../swatches/swatchList');
 
 var SwatchBox = React.createClass({
+	mixins: [ReactFireMixin],
 	getInitialState: function(){
 		return {swatches: []}
+	},
+	componentWillMount: function(){
+		var fireBaseRef = new Firebase("https://incandescent-heat-7106.firebaseio.com/kitty");
+		console.log(fireBaseRef);
 	},
 	componentDidMount: function(){
 		this.setState({

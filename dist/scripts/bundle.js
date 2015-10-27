@@ -28259,8 +28259,13 @@ var React = require('react');
 var SwatchList = require('../swatches/swatchList');
 
 var SwatchBox = React.createClass({displayName: "SwatchBox",
+	mixins: [ReactFireMixin],
 	getInitialState: function(){
 		return {swatches: []}
+	},
+	componentWillMount: function(){
+		var fireBaseRef = new Firebase("https://incandescent-heat-7106.firebaseio.com/kitty");
+		console.log(fireBaseRef);
 	},
 	componentDidMount: function(){
 		this.setState({
@@ -28292,7 +28297,7 @@ var React = require('react');
 
 var SwatchList = React.createClass({displayName: "SwatchList",
 	render: function(){
-		var swatchNodes = this.props.swatches.map(function(swatch){
+		var swatchNodes = this.props.swatches.map(function(swatch, i){
 			var swatchStyle = {
 				backgroundColor: swatch,
 				width: "20%",
@@ -28302,7 +28307,7 @@ var SwatchList = React.createClass({displayName: "SwatchList",
 				lineHeight: "100px"
 			};
 			return (
-				React.createElement("div", {className: "swatch", style: swatchStyle}, swatch)
+				React.createElement("div", {className: "swatch", style: swatchStyle, key: i}, swatch)
 			)
 		});
 		return (
