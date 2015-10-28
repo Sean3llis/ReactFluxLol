@@ -28256,7 +28256,6 @@ module.exports = Header;
 "use strict";
 
 var React = require('react');
-var SwatchList = require('../swatches/swatchList');
 
 var SwatchBox = React.createClass({displayName: "SwatchBox",
 	mixins: [ReactFireMixin],
@@ -28264,23 +28263,34 @@ var SwatchBox = React.createClass({displayName: "SwatchBox",
 		return {swatches: []}
 	},
 	componentWillMount: function(){
-		var fireBaseRef = new Firebase("https://incandescent-heat-7106.firebaseio.com/kitty");
-		console.log(fireBaseRef);
+		var fireBaseRef = new Firebase("https://incandescent-heat-7106.firebaseio.com/swatchLists");
+		this.bindAsArray(fireBaseRef, 'swatchLists')
 	},
 	componentDidMount: function(){
-		this.setState({
-			swatches: ["#ECD078", "#D95B43", "#C02942", "#542437", "#53777A"]
-		})
+		// component rendered to dom
 	},
 	render: function(){
-
+		var swatchNodes = this.props.data.swatches.map(function(swatch, i ){
+			console.log(swatch);
+			var swatchStyle = {
+				backgroundColor: swatch,
+				width: "20%",
+				minHeight: "100px",
+				lineHeight: "100px",
+				color: "#fff",
+				display: "inline-block"
+			};
+			return (
+				React.createElement("div", {className: "swatch", style: swatchStyle}, swatch)
+			)
+		});
 		return (
-			React.createElement("div", {className: "panel"}, 
-				React.createElement("div", {className: "swatches"}, 
-					React.createElement(SwatchList, {swatches: this.state.swatches})
-				), 
-				React.createElement("div", null, 
-					React.createElement("h3", null, "Swatch Group")
+			React.createElement("div", {className: "col-sm-4"}, 
+				React.createElement("div", {className: "panel"}, 
+					React.createElement("div", {className: "swatchWrapper"}, 
+						swatchNodes
+					), 
+					React.createElement("h1", null, this.props.data.title)
 				)
 			)
 		)
@@ -28290,51 +28300,57 @@ var SwatchBox = React.createClass({displayName: "SwatchBox",
 
 module.exports = SwatchBox;
 
-},{"../swatches/swatchList":163,"react":158}],163:[function(require,module,exports){
+},{"react":158}],163:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
+var SwatchBox = require('../swatches/swatchBox');
 
-var SwatchList = React.createClass({displayName: "SwatchList",
+var SwatchRow = React.createClass({displayName: "SwatchRow",
+	mixins: [ReactFireMixin],
+	getInitialState: function(){
+		return {swatchGroups: []}
+	},
+	componentWillMount: function(){
+		var fireBaseRef = new Firebase("https://incandescent-heat-7106.firebaseio.com/swatchLists");
+		this.bindAsArray(fireBaseRef, 'swatchGroups')
+	},
+	componentDidMount: function(){
+		// component rendered to dom
+	},
 	render: function(){
-		var swatchNodes = this.props.swatches.map(function(swatch, i){
-			var swatchStyle = {
-				backgroundColor: swatch,
-				width: "20%",
-				display: "inline-block",
-				color: "#fff",
-				minHeight: "100px",
-				lineHeight: "100px"
-			};
+		var swatchBoxes = this.state.swatchGroups.map(function(swatchObj){
 			return (
-				React.createElement("div", {className: "swatch", style: swatchStyle, key: i}, swatch)
-			)
-		});
+				React.createElement(SwatchBox, {key: swatchObj.key, data: swatchObj})
+			);
+		})
 		return (
 			React.createElement("div", null, 
-				swatchNodes
+				React.createElement("h1", null, "SwatchRow"), 
+				swatchBoxes
 			)
 		)
 	}
 });
 
-module.exports = SwatchList;
 
-},{"react":158}],164:[function(require,module,exports){
+module.exports = SwatchRow;
+
+},{"../swatches/swatchBox":162,"react":158}],164:[function(require,module,exports){
 $ = jQuery = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Home = require('./components/homePage');
 var Header = require('./components/partials/header');
 var About = require('./components/about/aboutPage');
-var SwatchBox = require('./components/swatches/swatchBox');
+var SwatchRow = require('./components/swatches/swatchRow');
 
 var App = React.createClass({displayName: "App",
 	render: function(){
 		var Child;
 		switch(this.props.route) {
 			case 'about' : Child = About; break;
-			case 'swatches' : Child = SwatchBox; break;
+			case 'swatches' : Child = SwatchRow; break;
 			default : Child = Home;
 		}
 
@@ -28356,4 +28372,4 @@ function render(){
 window.addEventListener('hashchange', render);
 render();
 
-},{"./components/about/aboutPage":159,"./components/homePage":160,"./components/partials/header":161,"./components/swatches/swatchBox":162,"jquery":2,"react":158,"react-dom":3}]},{},[164]);
+},{"./components/about/aboutPage":159,"./components/homePage":160,"./components/partials/header":161,"./components/swatches/swatchRow":163,"jquery":2,"react":158,"react-dom":3}]},{},[164]);

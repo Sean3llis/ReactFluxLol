@@ -1,7 +1,6 @@
 "use strict";
 
 var React = require('react');
-var SwatchList = require('../swatches/swatchList');
 
 var SwatchBox = React.createClass({
 	mixins: [ReactFireMixin],
@@ -9,23 +8,34 @@ var SwatchBox = React.createClass({
 		return {swatches: []}
 	},
 	componentWillMount: function(){
-		var fireBaseRef = new Firebase("https://incandescent-heat-7106.firebaseio.com/kitty");
-		console.log(fireBaseRef);
+		var fireBaseRef = new Firebase("https://incandescent-heat-7106.firebaseio.com/swatchLists");
+		this.bindAsArray(fireBaseRef, 'swatchLists')
 	},
 	componentDidMount: function(){
-		this.setState({
-			swatches: ["#ECD078", "#D95B43", "#C02942", "#542437", "#53777A"]
-		})
+		// component rendered to dom
 	},
 	render: function(){
-
+		var swatchNodes = this.props.data.swatches.map(function(swatch, i ){
+			console.log(swatch);
+			var swatchStyle = {
+				backgroundColor: swatch,
+				width: "20%",
+				minHeight: "100px",
+				lineHeight: "100px",
+				color: "#fff",
+				display: "inline-block"
+			};
+			return (
+				<div className="swatch" style={swatchStyle}>{swatch}</div>
+			)
+		});
 		return (
-			<div className="panel">
-				<div className="swatches">
-					<SwatchList swatches={this.state.swatches} />
-				</div>
-				<div>
-					<h3>Swatch Group</h3>
+			<div className="col-sm-4">
+				<div className="panel">
+					<div className="swatchWrapper">
+						{swatchNodes}
+					</div>
+					<h1>{this.props.data.title}</h1>
 				</div>
 			</div>
 		)
