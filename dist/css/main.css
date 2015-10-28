@@ -2,7 +2,9 @@
   transform: rotateZ(45deg);
   position: absolute;
   right: 20px;
-  width: 20px; }
+  width: 20px;
+  color: #fff;
+  font-weight: bold; }
 
 .swatchWrapper .swatch {
   width: 20%;

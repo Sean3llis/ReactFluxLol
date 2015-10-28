@@ -28280,22 +28280,38 @@ var SwatchBox = React.createClass({displayName: "SwatchBox",
 		// 	easing: "ease-in-out"
 		// })
 	},
+	deleteBox: function(e){
+		var fireBaseRef = new Firebase("https://incandescent-heat-7106.firebaseio.com/swatchLists");
+		// fireBaseRef.child
+		console.log(e.target);
+	},
 	render: function(){
+		var _this = this;
 		var swatchNodes = this.props.data.swatches.map(function(swatch, i ){
 			var swatchStyle = { backgroundColor: swatch };
 			return (
 				React.createElement("div", {className: "swatch", key: i, style: swatchStyle}, swatch)
-			)
+			);
 		});
 		return (
 			React.createElement("div", {className: "col-sm-4"}, 
 				React.createElement("div", {className: "panel swatchWrapper"}, 
-					React.createElement("div", {className: "swatchDelete"}, "+"), 
+					React.createElement(DeleteSwatchBox, {clickHandler: this.deleteBox}), 
 						swatchNodes, 
 					React.createElement("h1", null, this.props.data.title)
 				)
 			)
 		)
+	}
+});
+
+var DeleteSwatchBox = React.createClass({displayName: "DeleteSwatchBox",
+	render: function(){
+		return (
+			React.createElement("div", {className: "swatchDelete", onClick:  this.props.clickHandler}, 
+				"+"
+			)
+		);
 	}
 });
 

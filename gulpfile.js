@@ -82,7 +82,7 @@ gulp.task('images', function(){
 });
 
 
-gulp.task('default', ['html', 'js', 'css', 'sass', 'images', 'watch']);
+gulp.task('default', ['html', 'js', 'css', 'sass', 'images', 'open', 'watch']);
 
 
 

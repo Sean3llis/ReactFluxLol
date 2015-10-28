@@ -25,22 +25,38 @@ var SwatchBox = React.createClass({
 		// 	easing: "ease-in-out"
 		// })
 	},
+	deleteBox: function(e){
+		var fireBaseRef = new Firebase("https://incandescent-heat-7106.firebaseio.com/swatchLists");
+		// fireBaseRef.child
+		console.log(e.target);
+	},
 	render: function(){
+		var _this = this;
 		var swatchNodes = this.props.data.swatches.map(function(swatch, i ){
 			var swatchStyle = { backgroundColor: swatch };
 			return (
 				<div className="swatch" key={i} style={swatchStyle}>{swatch}</div>
-			)
+			);
 		});
 		return (
 			<div className="col-sm-4">
 				<div className="panel swatchWrapper">
-					<div className="swatchDelete">+</div>
+					<DeleteSwatchBox clickHandler={this.deleteBox} />
 						{swatchNodes}
 					<h1>{this.props.data.title}</h1>
 				</div>
 			</div>
 		)
+	}
+});
+
+var DeleteSwatchBox = React.createClass({
+	render: function(){
+		return (
+			<div className="swatchDelete" onClick={ this.props.clickHandler }>
+				+
+			</div>
+		);
 	}
 });
 
