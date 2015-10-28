@@ -1,0 +1,14 @@
+.swatchWrapper .swatchDelete {
+  transform: rotateZ(45deg);
+  position: absolute;
+  right: 20px;
+  width: 20px; }
+
+.swatchWrapper .swatch {
+  width: 20%;
+  color: white;
+  min-height: 100px;
+  line-height: 100px;
+  background-color: #DCDCDC;
+  display: inline-block;
+  vertical-align: middle; }

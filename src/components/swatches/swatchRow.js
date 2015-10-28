@@ -1,7 +1,7 @@
 "use strict";
 
 var React = require('react');
-var SwatchBox = require('../swatches/swatchBox');
+var SwatchBox = require('./swatchBox');
 
 var SwatchRow = React.createClass({
 	mixins: [ReactFireMixin],
@@ -18,13 +18,16 @@ var SwatchRow = React.createClass({
 	render: function(){
 		var swatchBoxes = this.state.swatchGroups.map(function(swatchObj){
 			return (
-				<SwatchBox key={swatchObj.key} data={swatchObj}/>
+				<SwatchBox key={swatchObj[".key"]} data={swatchObj}/>
 			);
 		})
 		return (
 			<div>
 				<h1>SwatchRow</h1>
-				{swatchBoxes}
+				<div className="row">
+					{swatchBoxes}
+					<div className="clearfix"></div>
+				</div>
 			</div>
 		)
 	}

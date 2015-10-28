@@ -1,6 +1,9 @@
 "use strict";
 
 var React = require('react');
+var ReactDOM = require('react-dom');
+
+var Velocity = require('../../velocity.min.js');
 
 var SwatchBox = React.createClass({
 	mixins: [ReactFireMixin],
@@ -13,34 +16,32 @@ var SwatchBox = React.createClass({
 	},
 	componentDidMount: function(){
 		// component rendered to dom
+		// var currentBox = ReactDOM.findDOMNode(this);
+		// Velocity(currentBox, {
+		// 	marginTop: "+=100px"
+		// },
+		// {
+		// 	duration: 500,
+		// 	easing: "ease-in-out"
+		// })
 	},
 	render: function(){
 		var swatchNodes = this.props.data.swatches.map(function(swatch, i ){
-			console.log(swatch);
-			var swatchStyle = {
-				backgroundColor: swatch,
-				width: "20%",
-				minHeight: "100px",
-				lineHeight: "100px",
-				color: "#fff",
-				display: "inline-block"
-			};
+			var swatchStyle = { backgroundColor: swatch };
 			return (
-				<div className="swatch" style={swatchStyle}>{swatch}</div>
+				<div className="swatch" key={i} style={swatchStyle}>{swatch}</div>
 			)
 		});
 		return (
 			<div className="col-sm-4">
-				<div className="panel">
-					<div className="swatchWrapper">
+				<div className="panel swatchWrapper">
+					<div className="swatchDelete">+</div>
 						{swatchNodes}
-					</div>
 					<h1>{this.props.data.title}</h1>
 				</div>
 			</div>
 		)
 	}
 });
-
 
 module.exports = SwatchBox;
